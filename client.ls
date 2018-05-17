@@ -20,15 +20,19 @@ if Meteor.isClient
 					m \.col.m6, m \p.white-text.center, i.cap
 
 	front = ->
-		attr = form: onsubmit: (e) ->
-			e.preventDefault!
-			Meteor.call \update, state.edit, e.target.0.value
-			state.edit = null
+		attr =
+			form: onsubmit: (e) ->
+				e.preventDefault!
+				Meteor.call \update, state.edit, e.target.0.value
+				state.edit = null
+			reset: onclick: -> Meteor.call \reset, (err, res) ->
+				m.redraw! if res
 		view: -> m \.container,
 			if state.edit
 				m \form, attr.form, m \.input-field, m \input,
 					type: \text, id: state.edit.group
 			coll.find!fetch!map -> makeRooms it
+			m \.center, m \a, attr.reset, \Reset
 
 	Meteor.subscribe \coll, onReady: ->
 		m.mount document.body, front!
