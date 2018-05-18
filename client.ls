@@ -11,9 +11,12 @@ if Meteor.isClient
 				ondblclick: ->
 					state.edit = group: groupId, room: doc
 					m.redraw!
+			header: ondblclick: ->
+				change = prompt 'Ganti dengan warna apa?'
+				if change then Meteor.call \changeColor, obj.name, change
 		m \.row,
 			m \.divider
-			m \h4.center, obj.label
+			m \h4.center, attr.header, obj.label
 			obj.rooms.map (i) ->
 				m \.col, attr.room(i, obj.name),
 					m \.col.m6, m \p.white-text.center, _.startCase i.name
@@ -25,12 +28,13 @@ if Meteor.isClient
 				e.preventDefault!
 				Meteor.call \update, state.edit, e.target.0.value
 				state.edit = null
-			reset: onclick: -> Meteor.call \reset, (err, res) ->
+			reset: ondblclick: -> Meteor.call \reset, (err, res) ->
 				m.redraw! if res
 		view: -> m \.container,
-			if state.edit
-				m \form, attr.form, m \.input-field, m \input,
+			if state.edit then m \form, attr.form,
+				m \.input-field, m \input,
 					type: \text, id: state.edit.group
+				m \input.btn, type: \submit
 			coll.find!fetch!map -> makeRooms it
 			m \.center, m \a, attr.reset, \Reset
 

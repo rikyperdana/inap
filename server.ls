@@ -15,3 +15,8 @@ if Meteor.isServer
 		reset: ->
 			coll.remove {}
 			seeder.map -> coll.insert it
+
+		changeColor: (group, color) ->
+			sel = name: group
+			mod = $set: {color}
+			coll.update sel, mod
