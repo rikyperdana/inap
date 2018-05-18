@@ -28,13 +28,20 @@ if Meteor.isClient
 				e.preventDefault!
 				Meteor.call \update, state.edit, e.target.0.value
 				state.edit = null
-			reset: ondblclick: -> Meteor.call \reset, (err, res) ->
-				m.redraw! if res
+				$ \#modal1 .modal \close
+			reset: ondblclick: ->
+				# Meteor.call \reset, (err, res) -> m.redraw! if res
+				$ \#modal2 .modal \open
+			modal: oncreate: -> $ \#modal1 .modal!modal \open
 		view: -> m \.container,
-			if state.edit then m \form, attr.form,
-				m \.input-field, m \input,
-					type: \text, id: state.edit.group
-				m \input.btn, type: \submit
+			if state.edit
+				m \.modal#modal1, attr.modal, m \form, attr.form,
+					m \.modal-content,
+						m \h4, 'Sisa bangsal'
+						m \.input-field, m \input,
+							type: \text, id: state.edit.group
+					m \.modal-footer,
+						m \input.btn, type: \submit
 			coll.find!fetch!map -> makeRooms it
 			m \.center, m \a, attr.reset, \Reset
 
