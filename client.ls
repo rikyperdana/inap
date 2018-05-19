@@ -11,16 +11,13 @@ if Meteor.isClient
 				ondblclick: ->
 					state.edit = group: groupId, room: doc
 					m.redraw!
-			header: ondblclick: ->
-				change = prompt 'Ganti dengan warna apa?'
-				if change then Meteor.call \changeColor, obj.name, change
 		m \.row,
 			m \.divider
 			m \h4.center, attr.header, obj.label
 			obj.rooms.map (i) ->
 				m \.col, attr.room(i, obj.name),
 					m \.col.m6, m \p.white-text.center, _.startCase i.name
-					m \.col.m6, m \p.white-text.center, i.cap
+					m \.col.m6, m \p.white-text.center, "#{i.use or 0} of #{i.cap}"
 
 	front = ->
 		attr =
@@ -30,19 +27,18 @@ if Meteor.isClient
 				state.edit = null
 				$ \#modal1 .modal \close
 			reset: ondblclick: ->
-				# Meteor.call \reset, (err, res) -> m.redraw! if res
-				$ \#modal2 .modal \open
+				Meteor.call \reset, (err, res) -> m.redraw! if res
 			modal: oncreate: -> $ \#modal1 .modal!modal \open
 		view: -> m \.container,
 			if state.edit
 				m \.modal#modal1, attr.modal, m \form, attr.form,
 					m \.modal-content,
-						m \h4, 'Sisa bangsal'
+						m \h4, 'Bangsal terpakai'
 						m \.input-field, m \input,
 							type: \text, id: state.edit.group
 					m \.modal-footer,
 						m \input.btn, type: \submit
-			coll.find!fetch!map -> makeRooms it
+			coll.find!fetch!map makeRooms
 			m \.center, m \a, attr.reset, \Reset
 
 	Meteor.subscribe \coll, onReady: ->
