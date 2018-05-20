@@ -14,7 +14,8 @@ if Meteor.isServer
 
 		reset: ->
 			coll.bangsal.remove {}
-			seeder.map coll.bangsal.insert
+			coll.marquee.remove {}
+			seeder.map -> coll.bangsal.insert it
 
 		marquee: (obj) ->
 			coll.marquee.remove {}
