@@ -95,5 +95,5 @@ if Meteor.isServer
 		]
 	]
 
-	unless coll.findOne!
-		seeder.map -> coll.insert it
+	unless coll.bangsal.findOne!
+		seeder.map coll.bangsal.insert

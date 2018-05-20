@@ -21,28 +21,44 @@ if Meteor.isClient
 
 	front = ->
 		attr =
-			form: onsubmit: (e) ->
-				e.preventDefault!
-				Meteor.call \update, state.edit, e.target.0.value
-				state.edit = null
-				$ \#modal1 .modal \close
+			form:
+				bangsal: onsubmit: (e) ->
+					e.preventDefault!
+					Meteor.call \update, state.edit, e.target.0.value
+					state.edit = null; $ \#modalBangsal .modal \close
+				marquee: onsubmit: (e) ->
+					e.preventDefault!
+					Meteor.call \marquee, text: e.target.0.value, (err, res) ->
+						$ \#modalMarquee .modal \close if res
 			reset: ondblclick: ->
 				Meteor.call \reset, (err, res) -> m.redraw! if res
-			modal: oncreate: -> $ \#modal1 .modal!modal \open
+			modal: bangsal: oncreate: -> $ \#modalBangsal .modal!modal \open
+			marquee:
+				oncreate: -> $ \.marquee .marquee duration: 15000
+				ondblclick: -> $ \#modalMarquee .modal!modal \open
 		view: -> m \.container,
+			m \.left, m \h5, moment(new Date!)format 'D MMM YYYY'
+			m \.right, m \a, attr.reset, \Reset
 			if state.edit
-				m \.modal#modal1, attr.modal, m \form, attr.form,
+				m \.modal#modalBangsal, attr.modal.bangsal, m \form, attr.form.bangsal,
 					m \.modal-content,
 						m \h4, 'Bangsal terpakai'
 						m \.input-field, m \input,
 							type: \text, id: state.edit.group
 					m \.modal-footer,
-						m \input.btn, type: \submit
-			coll.find!fetch!map makeRooms
-			m \.center, m \a, attr.reset, \Reset
+						m \input.btn-flat, type: \submit
+			coll.bangsal.find!fetch!map makeRooms
+			m \.marquee, attr.marquee, m \h5, (coll.marquee.findOne!?text or 'no info')
+			m \.modal#modalMarquee, m \form, attr.form.marquee,
+				m \.modal-content,
+					m \h4, 'Konten Marquee'
+					m \.input-field, m \input,
+						type: \text, id: \marquee
+				m \.modal-footer,
+					m \input.btn-flat, type: \submit
 
 	Meteor.subscribe \coll, onReady: ->
 		m.mount document.body, front!
 
-	coll.find!observe do
-		changed: -> m.redraw!
+	coll.bangsal.find!observe changed: -> m.redraw!
+	coll.marquee.find!observe added: -> m.redraw!

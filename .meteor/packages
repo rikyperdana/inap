@@ -20,3 +20,5 @@ shell-server@0.3.1            # Server-side component of the `meteor shell` comm
 zenkogu:livescript-compiler
 materialize:materialize
 stevezhu:lodash
+michalvalasek:jquery-marquee
+momentjs:moment

@@ -1,17 +1,21 @@
 if Meteor.isServer
 
-	Meteor.publish \coll, -> coll.find {}
+	Meteor.publish \coll, -> [coll.bangsal.find({}), coll.marquee.find({})]
 
 	Meteor.methods do
 		update: (obj, num) ->
-			find = coll.findOne name: obj.group
+			find = coll.bangsal.findOne name: obj.group
 			sel = _id: find._id
 			mod = $set: rooms: do ->
 				index = _.findIndex find.rooms, -> it.name is obj.room.name
 				find.rooms[index]use = parseInt num
 				find.rooms
-			coll.update sel, mod
+			coll.bangsal.update sel, mod
 
 		reset: ->
-			coll.remove {}
-			seeder.map -> coll.insert it
+			coll.bangsal.remove {}
+			seeder.map coll.bangsal.insert
+
+		marquee: (obj) ->
+			coll.marquee.remove {}
+			coll.marquee.insert text: obj.text
