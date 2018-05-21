@@ -6,10 +6,10 @@ if Meteor.isServer
 		color: \red
 		rooms: [
 			name: \laki-laki
-			cap: 0
+			cap: 6
 		,
 			name: \perempuan
-			cap: 0
+			cap: 7
 		]
 	,
 		name: \hlk
@@ -17,13 +17,13 @@ if Meteor.isServer
 		color: \blue
 		rooms: [
 			name: \laki-laki
-			cap: 0
+			cap: 6
 		,
 			name: \perempuan
-			cap: 0
+			cap: 6
 		,
 			name: \anak
-			cap: 0
+			cap: 10
 		]
 	,
 		name: \dmd
@@ -31,67 +31,57 @@ if Meteor.isServer
 		color: \green
 		rooms: [
 			name: \dm2
-			cap: 0
+			cap: 2
 		,
 			name: \dm3
-			cap: 0
+			cap: 2
 		,
 			name: \dm4
-			cap: 0
+			cap: 4
 		,
 			name: \dm5
-			cap: 0
+			cap: 3
 		,
 			name: \dm6
-			cap: 0
+			cap: 3
 		,
 			name: \dm8
-			cap: 0
+			cap: 2
 		,
 			name: \dm9
-			cap: 0
+			cap: 2
 		,
 			name: \dm10
-			cap: 0
+			cap: 1
 		,
 			name: \dm11
-			cap: 0
+			cap: 2
 		,
 			name: \dm13
-			cap: 0
+			cap: 1
 		,
 			name: \dm13
-			cap: 0
+			cap: 3
 		,
 			name: \dm14
-			cap: 0
+			cap: 3
 		,
 			name: \isolasi
-			cap: 0
+			cap: 1
 		]
 	,
-		name: \prn
-		label: 'Perina'
+		name: \others
+		label: \Lainnya
 		color: \purple
 		rooms: [
-			name: \prn
-			cap: 0
-		]
-	,
-		name: \icu
-		label: 'ICU'
-		color: \pink
-		rooms: [
+			name: \perina
+			cap: 3
+		,
 			name: \icu
-			cap: 0
-		]
-	,
-		name: \dpr
-		label: 'Dang Purnama'
-		color: \teal
-		rooms: [
+			cap: 2
+		,
 			name: \kb
-			cap: 0
+			cap: 18
 		]
 	]
 
