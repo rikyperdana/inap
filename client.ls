@@ -50,7 +50,8 @@ if Meteor.isClient
 			m \nav.teal, m \.nav-wrapper, m \a.brand-logo.center, 'Sistem Informasi Ketersediaan Bangsal RSUD Petala Bumi'
 			m \.container,
 				m \.row,
-					m \h5.left, moment(coll.lastUpdate.findOne!date)format(\LT) + ' / ' + moment(coll.lastUpdate.findOne!date)?format 'D MMM YYYY'
+					if date = coll.lastUpdate.findOne!date
+						m \h5.left, "#{moment date .format 'LT D MM YYYY'}"
 					m \a.right, attr.modal.login, \Login
 					m \a.right, attr.reset, \Reset
 				if state.edit
