@@ -2,85 +2,85 @@ if Meteor.isServer
 
 	@seeder = [
 		name: \hnd
-		label: 'Hang Nadim'
+		label: 'Ruangan Hang Nadim'
 		color: \red
 		rooms: [
-			name: \laki-laki
+			name: \Laki-laki
 			cap: 6
 		,
-			name: \perempuan
+			name: \Perempuan
 			cap: 7
 		]
 	,
 		name: \hlk
-		label: 'Hang Lekir'
+		label: 'Ruangan Hang Lekir'
 		color: \blue
 		rooms: [
-			name: \laki-laki
+			name: \Laki-laki
 			cap: 6
 		,
-			name: \perempuan
+			name: \Perempuan
 			cap: 6
 		,
-			name: \anak
+			name: \Anak
 			cap: 10
 		]
 	,
 		name: \dmd
-		label: 'Dang Merdu'
+		label: 'Ruangan Dang Merdu'
 		color: \green
 		rooms: [
-			name: \dm2
+			name: \DM2
 			cap: 2
 		,
-			name: \dm3
+			name: \DM3
 			cap: 2
 		,
-			name: \dm4
+			name: \DM4
 			cap: 4
 		,
-			name: \dm5
+			name: \DM5
 			cap: 3
 		,
-			name: \dm6
+			name: \DM6
 			cap: 3
 		,
-			name: \dm8
+			name: \DM8
 			cap: 2
 		,
-			name: \dm9
+			name: \DM9
 			cap: 2
 		,
-			name: \dm10
+			name: \DM10
 			cap: 1
 		,
-			name: \dm11
+			name: \DM11
 			cap: 2
 		,
-			name: \dm13
+			name: \DM12
 			cap: 1
 		,
-			name: \dm13
+			name: \DM13
 			cap: 3
 		,
-			name: \dm14
+			name: \DM14
 			cap: 3
 		,
-			name: \isolasi
+			name: \Isolasi
 			cap: 1
 		]
 	,
 		name: \others
-		label: \Lainnya
+		label: 'Ruangan Lainnya'
 		color: \purple
 		rooms: [
-			name: \perina
+			name: \Perina
 			cap: 3
 		,
-			name: \icu
+			name: \ICU
 			cap: 2
 		,
-			name: \kb
+			name: 'Dang Purnama'
 			cap: 18
 		]
 	]
