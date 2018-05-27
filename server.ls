@@ -1,6 +1,10 @@
 if Meteor.isServer
 
-	Meteor.publish \coll, -> [coll.bangsal.find({}), coll.marquee.find({})]
+	Meteor.publish \coll, -> [
+		coll.bangsal.find {}
+		coll.marquee.find {}
+		coll.lastUpdate.find {}
+	]
 
 	Meteor.methods do
 		update: (obj, num) ->
@@ -20,3 +24,7 @@ if Meteor.isServer
 		marquee: (obj) ->
 			coll.marquee.remove {}
 			coll.marquee.insert text: obj.text
+
+		lastUpdate: ->
+			coll.lastUpdate.remove {}
+			coll.lastUpdate.insert date: new Date()

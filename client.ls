@@ -25,6 +25,7 @@ if Meteor.isClient
 				bangsal: onsubmit: (e) ->
 					e.preventDefault!
 					Meteor.call \update, state.edit, e.target.0.value
+					Meteor.call \lastUpdate
 					state.edit = null; $ \#modalBangsal .modal \close
 				marquee: onsubmit: (e) ->
 					e.preventDefault!
@@ -44,13 +45,14 @@ if Meteor.isClient
 					onclick: -> $ \#modalLogin .modal \open
 			marquee:
 				oncreate: -> $ \.marquee .marquee duration: 15000
-				ondblclick: -> Meteor.userId! and$ \#modalMarquee .modal!modal \open
+				ondblclick: -> Meteor.userId! and $ \#modalMarquee .modal!modal \open
 		view: -> m \div,
 			m \nav.teal, m \.nav-wrapper, m \a.brand-logo.center, 'Sistem Informasi Ketersediaan Bangsal RSUD Petala Bumi'
 			m \.container,
-				m \h5.left, moment(new Date!)format 'D MMM YYYY'
-				m \a.right, attr.modal.login, \Login
-				m \a.right, attr.reset, \Reset
+				m \.row,
+					m \h5.left, moment(coll.lastUpdate.findOne!date)format(\LT) + ' / ' + moment(coll.lastUpdate.findOne!date)?format 'D MMM YYYY'
+					m \a.right, attr.modal.login, \Login
+					m \a.right, attr.reset, \Reset
 				if state.edit
 					m \.modal#modalBangsal, attr.modal.bangsal, m \form, attr.form.bangsal,
 						m \.modal-content,
