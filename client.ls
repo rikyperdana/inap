@@ -17,7 +17,8 @@ if Meteor.isClient
 			obj.rooms.map (i) ->
 				m \.col, attr.room(i, obj.name),
 					m \.col.m6, m \p.white-text.center, i.name
-					m \.col.m6, m \p.white-text.center, "#{i.use or 0} of #{i.cap}"
+					m \.col.m6, m \p.white-text.center,
+						"sedia #{i.cap - (i.use or 0)} dari #{i.cap}"
 
 	front = ->
 		attr =
@@ -36,8 +37,9 @@ if Meteor.isClient
 					[username, password] = _.map e.target
 					Meteor.loginWithPassword username.value, password.value, (err) ->
 						$ \#modalLogin .modal \close
-			reset: ondblclick: -> if Meteor.userId!
+			reset: onclick: -> if Meteor.userId!
 				Meteor.call \reset, (err, res) -> m.redraw! if res
+			logout: onclick: -> Meteor.logout!
 			modal:
 				bangsal: oncreate: -> $ \#modalBangsal .modal!modal \open
 				login:
@@ -45,15 +47,20 @@ if Meteor.isClient
 					onclick: -> $ \#modalLogin .modal \open
 			marquee:
 				oncreate: -> $ \.marquee .marquee duration: 15000
-				ondblclick: -> Meteor.userId! and $ \#modalMarquee .modal!modal \open
+				ondclick: -> Meteor.userId! and $ \#modalMarquee .modal!modal \open
 		view: -> m \div,
-			m \nav.teal, m \.nav-wrapper, m \a.brand-logo.center, 'Sistem Informasi Ketersediaan Bangsal RSUD Petala Bumi'
+			m \nav.teal, m \.nav-wrapper, m \a.brand-logo.center,
+				'Sistem Informasi Ketersediaan Tempat Tidur RSUD Petala Bumi'
 			m \.container,
 				m \.row,
-					if date = coll.lastUpdate.findOne!date
-						m \h5.left, "#{moment date .format 'LT D MM YYYY'}"
-					m \a.right, attr.modal.login, \Login
-					m \a.right, attr.reset, \Reset
+					do ->
+						date = coll.lastUpdate.findOne!?date or new Date!
+						m \h5.left, "#{moment date .format 'LT / D MMM YYYY'}" if date
+					if Meteor.userId! then [
+						m \a.right.btn-flat, attr.reset, \Reset
+						m \a.right.btn-flat, attr.logout, \Logout
+					]
+					else m \a.right.btn-flat, attr.modal.login, \Login
 				if state.edit
 					m \.modal#modalBangsal, attr.modal.bangsal, m \form, attr.form.bangsal,
 						m \.modal-content,
