@@ -47,7 +47,7 @@ if Meteor.isClient
 					onclick: -> $ \#modalLogin .modal \open
 			marquee:
 				oncreate: -> $ \.marquee .marquee duration: 15000
-				ondclick: -> Meteor.userId! and $ \#modalMarquee .modal!modal \open
+				ondblclick: -> Meteor.userId! and $ \#modalMarquee .modal!modal \open
 		view: -> m \div,
 			m \nav.teal, m \.nav-wrapper, m \a.brand-logo.center,
 				'Sistem Informasi Ketersediaan Tempat Tidur RSUD Petala Bumi'
@@ -55,7 +55,7 @@ if Meteor.isClient
 				m \.row,
 					do ->
 						date = coll.lastUpdate.findOne!?date or new Date!
-						m \h5.left, "#{moment date .format 'LT / D MMM YYYY'}" if date
+						date and m \h5.left, 'Last Update: ' + moment(date)format 'LT / D MMM YYYY'
 					if Meteor.userId! then [
 						m \a.right.btn-flat, attr.reset, \Reset
 						m \a.right.btn-flat, attr.logout, \Logout

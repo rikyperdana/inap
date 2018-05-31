@@ -51,7 +51,7 @@ if Meteor.isServer
 			name: \DM9
 			cap: 2
 		,
-			name: \DM10
+			name: 'DM10 (VIP)'
 			cap: 1
 		,
 			name: \DM11
